@@ -8,10 +8,10 @@ async function main() {
   try {
     // create two dummy schedules
     const schedule1 = await prisma.schedule.upsert({
-      where: { id: "1" },
+      where: { id: '1' },
       update: {},
       create: {
-        id: "1",
+        id: '1',
         account_id: 1,
         agent_id: 1,
         start_time: new Date('2023-10-01T09:00:00Z'),
@@ -19,14 +19,14 @@ async function main() {
         tasks: {
           create: [
             {
-              id: "1",
+              id: '1',
               account_id: 1,
               start_time: new Date('2023-10-01T09:00:00Z'),
               duration: 60,
               type: 'Meeting',
             },
             {
-              id: "2",
+              id: '2',
               account_id: 1,
               start_time: new Date('2023-10-01T10:00:00Z'),
               duration: 30,
@@ -38,10 +38,10 @@ async function main() {
     });
 
     const schedule2 = await prisma.schedule.upsert({
-      where: { id: "2" },
+      where: { id: '2' },
       update: {},
       create: {
-        id: "2",
+        id: '2',
         account_id: 2,
         agent_id: 2,
         start_time: new Date('2023-10-02T09:00:00Z'),
@@ -49,14 +49,14 @@ async function main() {
         tasks: {
           create: [
             {
-              id: "3",
+              id: '3',
               account_id: 2,
               start_time: new Date('2023-10-02T09:00:00Z'),
               duration: 45,
               type: 'Review',
             },
             {
-              id: "4",
+              id: '4',
               account_id: 2,
               start_time: new Date('2023-10-02T11:00:00Z'),
               duration: 90,
@@ -80,6 +80,5 @@ main()
     process.exit(1);
   })
   .finally(async () => {
-    // close Prisma Client at the end
     await prisma.$disconnect();
   });

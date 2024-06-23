@@ -31,17 +31,16 @@ export class TaskService {
 
   async remove(id: number) {
     try {
-      console.log(`Deleting task with id: ${id}`); // Debug line
+      console.log(`Deleting task with id: ${id}`);
 
-      // Delete the task
       const deletedTask = await this.prisma.task.delete({
         where: { id: id.toString() },
       });
 
-      console.log(`Successfully deleted task with id: ${id}`); // Debug line
+      console.log(`Successfully deleted task with id: ${id}`);
       return deletedTask;
     } catch (error) {
-      console.error(`Error occurred while deleting task with id: ${id}`, error); // Debug line
+      console.error(`Error occurred while deleting task with id: ${id}`, error);
       throw error;
     }
   }

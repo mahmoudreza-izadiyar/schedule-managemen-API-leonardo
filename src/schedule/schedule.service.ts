@@ -31,25 +31,23 @@ export class ScheduleService {
 
   async remove(id: number) {
     try {
-      console.log(`Deleting tasks for schedule_id: ${id}`); // Debug line
+      console.log(`Deleting tasks for schedule_id: ${id}`);
 
-      // Delete tasks associated with the schedule
       await this.prisma.task.deleteMany({
         where: { schedule_id: id.toString() },
       });
 
-      // Delete the schedule
       const deletedSchedule = await this.prisma.schedule.delete({
         where: { id: id.toString() },
       });
 
-      console.log(`Successfully deleted schedule with id: ${id}`); // Debug line
+      console.log(`Successfully deleted schedule with id: ${id}`);
       return deletedSchedule;
     } catch (error) {
       console.error(
         `Error occurred while deleting schedule with id: ${id}`,
-        error
-      ); // Debug line
+        error,
+      );
       throw error;
     }
   }
