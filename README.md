@@ -1,73 +1,61 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Project Title
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A brief description of what your project does and its main features.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Database Schema](#database-schema)
+- [Usage](#usage)
+- [Running Tests](#running-tests)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Introduction
 
-## Installation
+This project is a comprehensive solution for managing schedules and tasks using TypeScript. It involves the design and implementation of RESTful API endpoints to handle scheduling and task management. The resources managed by this project include Schedules and Tasks.
 
-```bash
-$ npm install
-```
+A Schedule has a unique identifier, an associated account, an assigned agent, and start and end times. A Task, on the other hand, has a unique identifier, an associated account, a reference to the schedule it belongs to, a start time, a duration, and a type which can be either 'break' or 'work'.
 
-## Running the app
+There is a one-to-many relationship between Schedule and Tasks, where a Schedule can have multiple Tasks associated with it. The project is implemented using TypeScript and NestJS, with PostgreSQL as the database for data storage and Prisma as the ORM tool.
 
-```bash
-# development
-$ npm run start
+The codebase is designed with the SOLID principles in mind, ensuring it is clean, maintainable, and extensible. It also includes thorough unit tests to validate the functionality of the API endpoints.
 
-# watch mode
-$ npm run start:dev
+## Features
 
-# production mode
-$ npm run start:prod
-```
+- Implementation of RESTful API endpoints for managing schedules and tasks using TypeScript.
+- Design and build of a comprehensive scheduling and task management system.
+- Utilization of PostgreSQL for data storage and Prisma as an ORM tool.
+- Adherence to SOLID principles for clean, maintainable, and extensible code.
+- Thorough unit tests to validate the functionality of the API endpoints.
 
-## Test
+## Technologies Used
 
-```bash
-# unit tests
-$ npm run test
+- NestJS
+- Prisma
+- PostgreSQL (or your chosen database)
+- Swagger
 
-# e2e tests
-$ npm run test:e2e
+## Prerequisites
 
-# test coverage
-$ npm run test:cov
-```
+To run this project, you will need the following prerequisites:
 
-## Support
+- Node.js (vXX.X.X)
+- npm or yarn
+- Docker
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Once you have these prerequisites installed, follow these steps to run the project:
 
-## Stay in touch
+1. **Start Docker:** If you are using Docker for your database, start Docker by running the command `docker-compose up -d` in your terminal. This will start the PostgreSQL database in a Docker container.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+2. **Run Database Seeds:** To populate your database with initial data, run the seed script with the command `npm run seed` or `yarn seed`. This will create some initial data in your database.
 
-## License
+3. **Start the Server:** Start the NestJS server by running the command `npm run start` or `yarn start`. This will start the server and it will begin listening for requests.
 
-Nest is [MIT licensed](LICENSE).
+4. **View the API Documentation:** Once the server is running, you can view the API documentation and interact with the API endpoints by navigating to `http://localhost:3000/api` in your web browser. This will open the Swagger UI where you can view the API documentation and send requests to the API endpoints.
