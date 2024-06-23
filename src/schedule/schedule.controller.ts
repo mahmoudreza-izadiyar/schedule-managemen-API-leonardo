@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
 
 import { ScheduleService } from './schedule.service';
@@ -28,20 +27,20 @@ export class ScheduleController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: string) {
+  async findOne(@Param('id') id: string) {
     return await this.scheduleService.findOne(id);
   }
 
   @Patch(':id')
   async update(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string,
     @Body() updateScheduleDto: UpdateScheduleDto,
   ) {
     return await this.scheduleService.update(id, updateScheduleDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id', ParseIntPipe) id: string) {
+  async remove(@Param('id') id: string) {
     return await this.scheduleService.remove(id);
   }
 }

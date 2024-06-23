@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
 } from '@nestjs/common';
 
 import { TaskService } from './task.service';
@@ -28,16 +27,13 @@ export class TaskController {
   }
 
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: string) {
+  async findOne(@Param('id') id: string) {
     return await this.taskService.findOne(id);
   }
 
   @Patch(':id')
-  async update(
-    @Param('id', ParseIntPipe) id: string,
-    @Body() updateTaskDto: UpdateTaskDto,
-  ) {
-    return this.taskService.update(id, updateTaskDto);
+  async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    return await this.taskService.update(id, updateTaskDto);
   }
 
   @Delete(':id')
