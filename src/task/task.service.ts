@@ -16,25 +16,25 @@ export class TaskService {
     return this.prisma.task.findMany();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.prisma.task.findUnique({
-      where: { id: id.toString() },
+      where: { id },
     });
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
+  update(id: string, updateTaskDto: UpdateTaskDto) {
     return this.prisma.task.update({
-      where: { id: id.toString() },
+      where: { id },
       data: updateTaskDto,
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     try {
       console.log(`Deleting task with id: ${id}`);
 
       const deletedTask = await this.prisma.task.delete({
-        where: { id: id.toString() },
+        where: { id },
       });
 
       console.log(`Successfully deleted task with id: ${id}`);

@@ -16,20 +16,20 @@ export class ScheduleService {
     return this.prisma.schedule.findMany();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.prisma.schedule.findUnique({
-      where: { id: id.toString() },
+      where: { id },
     });
   }
 
-  update(id: number, updateScheduleDto: UpdateScheduleDto) {
+  update(id: string, updateScheduleDto: UpdateScheduleDto) {
     return this.prisma.schedule.update({
-      where: { id: id.toString() },
+      where: { id },
       data: updateScheduleDto,
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     try {
       console.log(`Deleting tasks for schedule_id: ${id}`);
 
@@ -38,7 +38,7 @@ export class ScheduleService {
       });
 
       const deletedSchedule = await this.prisma.schedule.delete({
-        where: { id: id.toString() },
+        where: { id },
       });
 
       console.log(`Successfully deleted schedule with id: ${id}`);
