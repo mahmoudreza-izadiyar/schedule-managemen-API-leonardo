@@ -15,9 +15,6 @@ model Schedule {
   start_time DateTime
   end_time   DateTime
   tasks      Task[]
-
-  @@index([account_id], name: "account_id_idx")
-  @@index([agent_id], name: "agent_id_idx")
 }
 
 model Task {
@@ -29,9 +26,6 @@ model Task {
   type        TaskType
 
   schedule Schedule @relation(fields: [schedule_id], references: [id])
-
-  @@index([account_id], name: "account_id_idx")
-  @@index([schedule_id], name: "schedule_id_idx")
 }
 
 enum TaskType {
