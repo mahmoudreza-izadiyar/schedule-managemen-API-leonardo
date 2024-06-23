@@ -1,19 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { CreateScheduleDto } from './dto/create-schedule.dto';
+import { UpdateScheduleDto } from './dto/update-schedule.dto';
+import { Schedule } from './entities/schedule.entity';
 import { ScheduleController } from './schedule.controller';
 import { ScheduleService } from './schedule.service';
-import { UpdateScheduleDto } from './dto/update-schedule.dto';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('ScheduleController', () => {
   let controller: ScheduleController;
-  let service: ScheduleService;
 
-  const mockSchedule = {
-    id: '1',
-    account_id: 123,
-    agent_id: 456,
-    start_time: new Date(),
-    end_time: new Date(),
+  const mockScheduleService = {
+    create: jest.fn(),
+    findAll: jest.fn(),
+    findOne: jest.fn(),
+    update: jest.fn(),
+    remove: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -22,92 +22,132 @@ describe('ScheduleController', () => {
       providers: [
         {
           provide: ScheduleService,
-          useValue: {
-            create: jest.fn().mockResolvedValue(mockSchedule),
-            findAll: jest.fn().mockResolvedValue([mockSchedule]),
-            findOne: jest.fn().mockResolvedValue(mockSchedule),
-            update: jest.fn().mockResolvedValue(mockSchedule),
-            remove: jest.fn().mockResolvedValue(mockSchedule),
-          },
+          useValue: mockScheduleService,
         },
       ],
     }).compile();
 
     controller = module.get<ScheduleController>(ScheduleController);
-    service = module.get<ScheduleService>(ScheduleService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('create()', () => {
-    // ... (same tests as before for valid and invalid DTOs)
+  it('create => should create a new schedule by a given data', async () => {
+    // arrange
+    const createScheduleDto = {
+      account_id: 123,
+      agent_id: 456,
+      start_time: new Date(),
+      end_time: new Date(),
+    } as CreateScheduleDto;
+
+    const schedule = {
+      id: '1',
+      account_id: 123,
+      agent_id: 456,
+      start_time: new Date(),
+      end_time: new Date(),
+    } as Schedule;
+
+    jest.spyOn(mockScheduleService, 'create').mockReturnValue(schedule);
+
+    // act
+    const result = await controller.create(createScheduleDto);
+
+    // assert
+    expect(mockScheduleService.create).toBeCalled();
+    expect(mockScheduleService.create).toBeCalledWith(createScheduleDto);
+
+    expect(result).toEqual(schedule);
   });
 
-  describe('findAll()', () => {
-    it('should return an array of schedules', async () => {
-      expect(await controller.findAll()).toEqual([mockSchedule]);
-      expect(service.findAll).toHaveBeenCalled();
-    });
+  it('findAll => should return an array of schedules', async () => {
+    // arrange
+    const schedule = {
+      id: '1',
+      account_id: 123,
+      agent_id: 456,
+      start_time: new Date(),
+      end_time: new Date(),
+    };
+    const schedules = [schedule];
+    jest.spyOn(mockScheduleService, 'findAll').mockReturnValue(schedules);
+
+    // act
+    const result = await controller.findAll();
+
+    // assert
+    expect(result).toEqual(schedules);
+    expect(mockScheduleService.findAll).toBeCalled();
   });
 
-  describe('findOne()', () => {
-    it('should return a schedule by ID', async () => {
-      expect(await controller.findOne('1')).toEqual(mockSchedule);
-      expect(service.findOne).toHaveBeenCalledWith('1');
-    });
+  it('findOne => should find a schedule by a given id and return its data', async () => {
+    // arrange
+    const id = '1';
+    const schedule = {
+      id: '1',
+      account_id: 123,
+      agent_id: 456,
+      start_time: new Date(),
+      end_time: new Date(),
+    };
 
-    it('should throw NotFoundException for invalid ID', async () => {
-      jest.spyOn(service, 'findOne').mockResolvedValueOnce(null); // Simulate not found
+    jest.spyOn(mockScheduleService, 'findOne').mockReturnValue(schedule);
 
-      await expect(controller.findOne('invalid-id')).rejects.toThrow(
-        NotFoundException,
-      );
-    });
+    // act
+    const result = await controller.findOne(id);
+
+    expect(result).toEqual(schedule);
+    expect(mockScheduleService.findOne).toBeCalled();
+    expect(mockScheduleService.findOne).toBeCalledWith(id);
   });
 
-  describe('update()', () => {
-    it('should update a schedule with valid DTO', async () => {
-      const dto: UpdateScheduleDto = {
-        account_id: 888,
-        agent_id: 999,
-      };
-      expect(await controller.update('1', dto)).toEqual(mockSchedule);
-      expect(service.update).toHaveBeenCalledWith('1', dto);
-    });
+  it('update => should find a schedule by a given id and update its data', async () => {
+    // arrange
+    const id = '1';
+    const updateScheduleDto = {
+      account_id: 123,
+      agent_id: 456,
+      start_time: new Date(),
+      end_time: new Date(),
+    } as UpdateScheduleDto;
+    const schedule = {
+      id: '1',
+      account_id: 123,
+      agent_id: 456,
+      start_time: new Date(),
+      end_time: new Date(),
+    };
 
-    it('should throw BadRequestException for invalid DTO', async () => {
-      const invalidDto: any = { account_id: 'invalid' };
+    jest.spyOn(mockScheduleService, 'update').mockReturnValue(schedule);
 
-      await expect(controller.update('1', invalidDto)).rejects.toThrow(
-        BadRequestException,
-      );
-      expect(service.update).not.toHaveBeenCalled();
-    });
+    // act
+    const result = await controller.update(id, updateScheduleDto);
 
-    it('should throw NotFoundException for invalid ID', async () => {
-      const invalidId = 'invalid-id';
-      jest.spyOn(service, 'update').mockResolvedValueOnce(null); // Simulate not found
-
-      await expect(controller.update(invalidId, {})).rejects.toThrow(
-        NotFoundException,
-      );
-    });
+    expect(result).toEqual(schedule);
+    expect(mockScheduleService.update).toBeCalled();
+    expect(mockScheduleService.update).toBeCalledWith(id, updateScheduleDto);
   });
 
-  describe('remove()', () => {
-    it('should remove a schedule by ID', async () => {
-      expect(await controller.remove('1')).toEqual(mockSchedule);
-      expect(service.remove).toHaveBeenCalledWith('1');
-    });
+  it('remove => should find a schedule by a given id, remove and then return the removed schedule', async () => {
+    const id = '1';
+    const schedule = {
+      id: '1',
+      account_id: 123,
+      agent_id: 456,
+      start_time: new Date(),
+      end_time: new Date(),
+    };
 
-    it('should throw NotFoundException for invalid ID', async () => {
-      jest.spyOn(service, 'remove').mockResolvedValueOnce(null); // Simulate not found
+    jest.spyOn(mockScheduleService, 'remove').mockReturnValue(schedule);
 
-      await expect(controller.findOne('invalid-id')).rejects.toThrow(
-        NotFoundException,
-      );
-    });
+    // act
+    const result = await controller.remove(id);
+
+    expect(result).toEqual(schedule);
+    expect(mockScheduleService.remove).toBeCalled();
+    expect(mockScheduleService.remove).toBeCalledWith(id);
   });
 });

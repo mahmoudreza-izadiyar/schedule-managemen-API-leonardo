@@ -52,11 +52,13 @@ Once you have these prerequisites installed, follow these steps to run the proje
 
 1. **Start Docker:** If you are using Docker for your database, start Docker by running the command `docker-compose up -d` in your terminal. This will start the PostgreSQL database in a Docker container.
 
-2. **Run Database Seeds:** To populate your database with initial data, run the seed script with the command `npm run seed` or `yarn seed`. This will create some initial data in your database.
+2. **Run Database Seeds:** To populate your database with initial data, run the seed script with the command 'npx prisma db seed`. This will create some initial data in your database.
 
-3. **Start the Server:** Start the NestJS server by running the command `npm run start` or `yarn start`. This will start the server and it will begin listening for requests.
+3. **Set Up Environment Variables:** Ensure that your `.env` file is correctly configured. Specifically, set the `DATABASE_URL` to `postgresql://leonardo_db:leonardo_db@localhost:5444/leonardo_db`. This URL points to the PostgreSQL database that will be used by the application.
 
-4. **View the API Documentation:** Once the server is running, you can view the API documentation and interact with the API endpoints by navigating to `http://localhost:3000/api` in your web browser. This will open the Swagger UI where you can view the API documentation and send requests to the API endpoints.
+4. **Start the Server:** Start the NestJS server by running the command `npm run start` or `yarn start`. This will start the server and it will begin listening for requests.
+
+5. **View the API Documentation:** Once the server is running, you can view the API documentation and interact with the API endpoints by navigating to `http://localhost:3000/api` in your web browser. This will open the Swagger UI where you can view the API documentation and send requests to the API endpoints.
 
 ## Database Schema
 
