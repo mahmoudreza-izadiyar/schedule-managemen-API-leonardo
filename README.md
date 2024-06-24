@@ -1,19 +1,4 @@
-# Project Title
-
-A brief description of what your project does and its main features.
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Prerequisites](#prerequisites)
-- [Database Schema](#database-schema)
-- [Running Tests](#running-tests)
-- [API Endpoints](#api-endpoints)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+# Schedule Management
 
 ## Introduction
 
